@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomoc Mucha — Ríša</title>
+<style>
+:root{
+  --bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;
+  --primary:#2563eb;--primary2:#1d4ed8;--border:#e4e7ec;
+  --shadow:0 12px 35px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav{max-width:1150px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.logo span{color:var(--primary)}
+nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+nav a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:650}
+nav a:hover{color:var(--primary)}
+button,.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:750;cursor:pointer;font-size:14px}
+.btn-primary{background:var(--primary);color:white;box-shadow:0 7px 18px rgba(37,99,235,.22)}
+.btn-primary:hover{background:var(--primary2)}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+main{max-width:1150px;margin:auto;padding:0 20px}
+.hero{padding:82px 0 65px;display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);background:var(--card);border-radius:999px;font-size:13px;font-weight:700;color:var(--muted)}
+.dot{width:9px;height:9px;border-radius:50%;background:#16a34a}
+h1{font-size:clamp(42px,7vw,72px);line-height:.98;letter-spacing:-3px;margin:18px 0}
+h1 span{color:var(--primary)}
+.lead{font-size:19px;line-height:1.65;color:var(--muted);max-width:650px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-card{background:var(--card);border:1px solid var(--border);border-radius:25px;padding:28px;box-shadow:var(--shadow)}
+.hero-card h3{margin-top:0}
+.status{display:flex;align-items:center;gap:9px;font-weight:750}
+.section{padding:68px 0}
+.section-head{margin-bottom:28px}
+.kicker{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;font-weight:800;color:var(--primary)}
+h2{font-size:34px;letter-spacing:-1.2px;margin:8px 0}
+.sub{color:var(--muted);line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.card h3{margin:10px 0 8px}
+.icon{font-size:28px}
+.price{font-size:24px;font-weight:850;margin-top:18px}
+.small{font-size:13px;color:var(--muted)}
+.steps{counter-reset:step}
+.step{position:relative;padding-left:58px}
+.step:before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:12px;background:var(--primary);color:white;display:grid;place-items:center;font-weight:800}
+.about{display:grid;grid-template-columns:.7fr 1.3fr;gap:22px}
+.profile{display:flex;align-items:center;gap:16px}
+.avatar{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--primary),#7c3aed);color:white;display:grid;place-items:center;font-size:27px;font-weight:900}
+.ref{min-height:145px}
+.stars{letter-spacing:2px}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:17px 19px;margin:10px 0}
+.faq summary{cursor:pointer;font-weight:750}
+.contact-box{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+form{display:grid;gap:12px}
+input,textarea,select{width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font:inherit}
+textarea{min-height:125px;resize:vertical}
+footer{border-top:1px solid var(--border);margin-top:30px;padding:30px 20px;text-align:center;color:var(--muted)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+.modal{background:var(--card);color:var(--text);width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:22px;padding:24px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
+.modal-top{display:flex;justify-content:space-between;align-items:center}
+.close{background:transparent;font-size:24px;padding:5px}
+.ai-msg{padding:11px 13px;border-radius:13px;background:#f1f5f9;margin:8px 0;line-height:1.45}
+.ai-options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.theme-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.theme-btn{border:1px solid var(--border);background:var(--card);color:var(--text)}
+body.dark{--bg:#0b1020;--card:#111827;--text:#f4f7fb;--muted:#9aa6b8;--border:#253047}
+body.halloween{--bg:#17100c;--card:#241710;--text:#fff7ed;--muted:#cbb7a4;--border:#4b2b1d;--primary:#f97316;--primary2:#ea580c}
+body.autumn{--bg:#fff8ef;--card:#fff;--text:#3b2618;--muted:#806b5b;--border:#ead9c8;--primary:#c2410c;--primary2:#9a3412}
+body.winter{--bg:#eff7ff;--card:#fff;--text:#17324d;--muted:#62788d;--border:#d7e8f5;--primary:#0284c7;--primary2:#0369a1}
+body.christmas{--bg:#f7fbf8;--card:#fff;--text:#17351f;--muted:#637468;--border:#dbe9de;--primary:#16803c;--primary2:#126b32}
+body.spring{--bg:#f7fff9;--card:#fff;--text:#203c2a;--muted:#668070;--border:#dbeee1;--primary:#16a34a;--primary2:#15803d}
+body.summer{--bg:#fffdf3;--card:#fff;--text:#263746;--muted:#687887;--border:#eee4bd;--primary:#eab308;--primary2:#ca8a04}
+@media(max-width:800px){.hero,.about,.contact-box{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero{padding-top:55px}nav{display:none}.nav{justify-content:center}.section{padding:48px 0}.ai-options{grid-template-columns:1fr}h1{letter-spacing:-2px}}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">Pomoc <span>Mucha</span></div>
+
+    <nav>
+      <a href="#domu">Domů</a>
+      <a href="#sluzby">Služby</a>
+      <a href="#omne">O mně</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <button class="btn-secondary" onclick="openModal('settings')">⚙️</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="domu">
+
+  <div>
+
+    <div class="badge">
+      <span class="dot"></span>
+      <span id="availabilityText">Dostupný</span>
+    </div>
+
+    <h1>
+      Potřebujete s něčím <span>pomoct?</span>
+    </h1>
+
+    <p class="lead">
+      Pomáhám s weby, prezentacemi, grafikou, logy a dalšími kreativními projekty.
+      Řekni mi svůj nápad a společně vymyslíme řešení.
+    </p>
+
+    <div class="actions">
+
+      <button class="btn-primary" onclick="openModal('help')">
+        Potřebuji pomoc
+      </button>
+
+      <button class="btn-secondary"
+        onclick="document.querySelector('#sluzby').scrollIntoView()">
+        Prohlédnout služby
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="hero-card">
+
+    <div class="profile">
+
+      <div class="avatar">R</div>
+
+      <div>
+        <strong>Ríša</strong>
+        <div class="small">Pomoc Mucha</div>
+      </div>
+
+    </div>
+
+    <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+    <div class="status">
+      <span class="dot"></span>
+      Dostupný
+    </div>
+
+    <p class="small">
+      Pracovní doba: Po–Pá, 16:00–19:00
+    </p>
+
+    <button class="btn-primary"
+      style="width:100%;margin-top:10px"
+      onclick="openModal('ai')">
+      🤖 Zeptat se Mucha AI
+    </button>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="sluzby">
+
+  <div class="section-head">
+
+    <div class="kicker">Co nabízím</div>
+
+    <h2>S čím ti můžu pomoct</h2>
+
+    <p class="sub">
+      Ceny jsou orientační. Přesná nabídka se domluví podle náročnosti.
+    </p>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="icon">🌐</div>
+
+      <h3>Webové stránky</h3>
+
+      <p class="sub">
+        Jednoduché moderní weby a jejich úpravy.
+      </p>
+
+      <div class="price">
+        od 500 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Webové stránky')">
+        Mám zájem
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="icon">🎨</div>
+
+      <h3>Loga a grafika</h3>
+
+      <p class="sub">
+        Logo, vizuální nápad nebo jednoduchá grafika.
+      </p>
+
+      <div class="price">
+        od 150 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Loga a grafika')">
+        Mám zájem
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="icon">📊</div>
+
+      <h3>Prezentace</h3>
+
+      <p class="sub">
+        Přehledné prezentace do školy nebo projektu.
+      </p>
+
+      <div class="price">
+        od 100 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Prezentace')">
+        Mám zájem
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="icon">🖼️</div>
+
+      <h3>Plakáty</h3>
+
+      <p class="sub">
+        Plakáty a jednoduché propagační materiály.
+      </p>
+
+      <div class="price">
+        od 100 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Plakáty')">
+        Mám zájem
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="icon">💡</div>
+
+      <h3>Nápady a projekty</h3>
+
+      <p class="sub">
+        Pomoc s vymyšlením a plánováním projektu.
+      </p>
+
+      <div class="price">
+        od 100 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Nápady a projekty')">
+        Mám zájem
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="icon">🖥️</div>
+
+      <h3>Úpravy projektů</h3>
+
+      <p class="sub">
+        Doladění vzhledu, textů nebo jednoduchých funkcí.
+      </p>
+
+      <div class="price">
+        od 100 Kč
+      </div>
+
+      <button class="btn-primary"
+        onclick="selectService('Úpravy projektů')">
+        Mám zájem
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div class="kicker">Jak to funguje</div>
+
+    <h2>Jednoduše ve 3 krocích</h2>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card step">
+
+      <h3>Vybereš pomoc</h3>
+
+      <p class="sub">
+        Vyber službu nebo mi napiš, co potřebuješ.
+      </p>
+
+    </div>
+
+
+    <div class="card step">
+
+      <h3>Domluvíme se</h3>
+
+      <p class="sub">
+        Upřesníme zadání, cenu a termín.
+      </p>
+
+    </div>
+
+
+    <div class="card step">
+
+      <h3>Ríša pomůže</h3>
+
+      <p class="sub">
+        Pustím se do práce a výsledek společně doladíme.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section about" id="omne">
+
+  <div class="card">
+
+    <div class="kicker">O mně</div>
+
+    <h2>Ahoj, jsem Ríša 👋</h2>
+
+    <p class="sub">
+      Baví mě tvořit weby, grafiku, prezentace a vlastní projekty.
+      Pomoc Mucha vzniká jako místo, kde můžu svoje zkušenosti využít
+      a pomoct ostatním.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="kicker">Proč Pomoc Mucha?</div>
+
+    <h2>
+      Tvůj nápad. Moje pomoc. Společné řešení.
+    </h2>
+
+    <p class="sub">
+      Nemusíš přesně vědět, co potřebuješ.
+      Stačí popsat svůj nápad a můžeme společně najít nejlepší cestu.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="portfolio">
+
+  <div class="section-head">
+
+    <div class="kicker">Portfolio</div>
+
+    <h2>Moje práce</h2>
+
+    <p class="sub">
+      Ukázky projektů sem přidáme později. 🚀
+    </p>
+
+  </div>
+
+
+  <div class="card"
+    style="text-align:center;padding:45px">
+
+    <div class="icon">🖼️</div>
+
+    <h3>Portfolio se připravuje</h3>
+
+    <p class="sub">
+      Až budeš mít projekty, můžeme je sem jednoduše přidat.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <div class="section-head">
+
+    <div class="kicker">Reference</div>
+
+    <h2>Co říkají ostatní</h2>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card ref">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        „Skvělá pomoc s projektem a rychlá domluva.“
+      </p>
+
+      <div class="small">
+        — Reference bude doplněna
+      </div>
+
+    </div>
+
+
+    <div class="card ref">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        „Výsledek vypadal přesně podle představ.“
+      </p>
+
+      <div class="small">
+        — Reference bude doplněna
+      </div>
+
+    </div>
+
+
+    <div class="card ref">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        „Dobrá komunikace a kreativní nápady.“
+      </p>
+
+      <div class="small">
+        — Reference bude doplněna
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section faq" id="faq">
+
+  <div class="section-head">
+
+    <div class="kicker">FAQ</div>
+
+    <h2>Časté otázky</h2>
+
+  </div>
+
+
+  <details>
+
+    <summary>
+      Kolik služba stojí?
+    </summary>
+
+    <p class="sub">
+      U každé služby je orientační cena.
+      Přesná cena záleží na zadání.
+    </p>
+
+  </details>
+
+
+  <details>
+
+    <summary>
+      Jak tě můžu kontaktovat?
+    </summary>
+
+    <p class="sub">
+      Zatím přes kontaktní formulář.
+      Veřejný e-mail nebo telefon lze doplnit později.
+    </p>
+
+  </details>
+
+
+  <details>
+
+    <summary>
+      Jak dlouho práce trvá?
+    </summary>
+
+    <p class="sub">
+      Záleží na projektu.
+      Při objednávce můžeš uvést požadovaný termín.
+    </p>
+
+  </details>
+
+
+  <details>
+
+    <summary>
+      Musím přesně vědět, co chci?
+    </summary>
+
+    <p class="sub">
+      Ne. Můžeš využít Mucha AI nebo jednoduše popsat svůj nápad.
+    </p>
+
+  </details>
+
+</section>
+
+
+<section class="section" id="kontakt">
+
+  <div class="section-head">
+
+    <div class="kicker">Kontakt</div>
+
+    <h2>Potřebuješ pomoc?</h2>
+
+    <p class="sub">
+      Napiš, co potřebuješ, a Ríša se ozve.
+    </p>
+
+  </div>
+
+
+  <div class="contact-box">
+
+
+    <div class="card">
+
+      <form onsubmit="sendForm(event)">
+
+        <input
+          id="name"
+          required
+          placeholder="Tvoje jméno">
+
+        <input
+          id="email"
+          type="email"
+          required
+          placeholder="Tvůj e-mail">
+
+        <select id="service">
+
+          <option>
+            Vyber službu
+          </option>
+
+          <option>
+            Webové stránky
+          </option>
+
+          <option>
+            Loga a grafika
+          </option>
+
+          <option>
+            Prezentace
+          </option>
+
+          <option>
+            Plakáty
+          </option>
+
+          <option>
+            Nápady a projekty
+          </option>
+
+          <option>
+            Úpravy projektů
+          </option>
+
+        </select>
+
+
+        <input
+          id="date"
+          type="date">
+
+
+        <textarea
+          id="message"
+          required
+          placeholder="Co potřebuješ?"></textarea>
+
+
+        <button class="btn-primary">
+          📩 Odeslat požadavek
+        </button>
+
+      </form>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        🤖 Mucha AI
+      </h3>
+
+      <p class="sub">
+        Nevíš, kam svůj požadavek zařadit?
+        Mucha AI tě nasměruje.
+      </p>
+
+      <button
+        class="btn-primary"
+        onclick="openModal('ai')">
+        Spustit Mucha AI
+      </button>
+
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:25px 0">
+
+
+      <h3>
+        📞 Zavolat mi
+      </h3>
+
+      <p class="sub">
+        Telefon:
+        <span id="phoneDisplay">
+          DOPLŇ TELEFON
+        </span>
+      </p>
+
+      <a
+        class="btn btn-primary"
+        id="phoneLink"
+        href="tel:DOPLŇ_TELEFON">
+        📞 Zavolat mi
+      </a>
+
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:25px 0">
+
+
+      <h3>
+        📧 Napsat mi e-mail
+      </h3>
+
+      <p class="sub">
+        E-mail:
+        <span id="emailDisplay">
+          DOPLŇ EMAIL
+        </span>
+      </p>
+
+      <a
+        class="btn btn-secondary"
+        id="emailLink"
+        href="mailto:DOPLŇ_EMAIL">
+        📩 Napsat e-mail
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  © 2026 Pomoc Mucha · Ríša ·
+
+  <button
+    class="btn-secondary"
+    onclick="openModal('settings')">
+    Nastavení vzhledu
+  </button>
+
+</footer>
+
+
+<div class="modal-bg" id="help">
+
+  <div class="modal">
+
+    <div class="modal-top">
+
+      <h2>
+        Potřebuji pomoc
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('help')">
+        ×
+      </button>
+
+    </div>
+
+
+    <p class="sub">
+      Vyber, s čím potřebuješ pomoct.
+    </p>
+
+
+    <div class="ai-options">
+
+      <button
+        class="btn-secondary"
+        onclick="selectService('Webové stránky');closeModal('help')">
+        🌐 Web
+      </button>
+
+      <button
+        class="btn-secondary"
+        onclick="selectService('Loga a grafika');closeModal('help')">
+        🎨 Grafika
+      </button>
+
+      <button
+        class="btn-secondary"
+        onclick="selectService('Prezentace');closeModal('help')">
+        📊 Prezentace
+      </button>
+
+      <button
+        class="btn-secondary"
+        onclick="selectService('Plakáty');closeModal('help')">
+        🖼️ Plakát
+      </button>
+
+      <button
+        class="btn-secondary"
+        onclick="selectService('Nápady a projekty');closeModal('help')">
+        💡 Nápad
+      </button>
+
+      <button
+        class="btn-primary"
+        onclick="closeModal('help');openModal('ai')">
+        🤖 Mucha AI
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal-bg" id="ai">
+
+  <div class="modal">
+
+    <div class="modal-top">
+
+      <h2>
+        🤖 Mucha AI
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('ai')">
+        ×
+      </button>
+
+    </div>
+
+
+    <div id="aiContent">
+
+      <div class="ai-msg">
+
+        <strong>
+          Mucha AI:
+        </strong>
+
+        Ahoj! S čím potřebuješ pomoct?
+
+      </div>
+
+
+      <div class="ai-options">
+
+        <button
+          class="btn-secondary"
+          onclick="aiChoose('web')">
+          🌐 Web
+        </button>
+
+        <button
+          class="btn-secondary"
+          onclick="aiChoose('grafika')">
+          🎨 Grafika / logo
+        </button>
+
+        <button
+          class="btn-secondary"
+          onclick="aiChoose('prezentace')">
+          📊 Prezentace
+        </button>
+
+        <button
+          class="btn-secondary"
+          onclick="aiChoose('jine')">
+          💡 Něco jiného
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal-bg" id="settings">
+
+  <div class="modal">
+
+    <div class="modal-top">
+
+      <h2>
+        ⚙️ Nastavení
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('settings')">
+        ×
+      </button>
+
+    </div>
+
+
+    <h3>
+      Vzhled
+    </h3>
+
+
+    <div class="theme-list">
+
+      <button
+        class="theme-btn"
+        onclick="theme('')">
+        🌤️ Normální
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('dark')">
+        🌙 Tmavé
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('halloween')">
+        🎃 Halloween
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('autumn')">
+        🍂 Podzim
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('winter')">
+        ❄️ Zima
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('christmas')">
+        🎄 Vánoce
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('spring')">
+        🌸 Jaro
+      </button>
+
+      <button
+        class="theme-btn"
+        onclick="theme('summer')">
+        ☀️ Léto
+      </button>
+
+    </div>
+
+
+    <h3 style="margin-top:25px">
+      Dostupnost
+    </h3>
+
+
+    <button
+      class="btn-secondary"
+      onclick="toggleAvailability()">
+      🟢 Přepnout dostupnost
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const modalIds = ['help','ai','settings'];
+
+
+function openModal(id){
+
+  document.getElementById(id).style.display='flex';
+
+}
+
+
+function closeModal(id){
+
+  document.getElementById(id).style.display='none';
+
+}
+
+
+function theme(name){
+
+  document.body.className=name;
+
+  localStorage.setItem('pmTheme',name);
+
+  closeModal('settings');
+
+}
+
+
+function toggleAvailability(){
+
+  const el =
+    document.getElementById('availabilityText');
+
+  const available =
+    el.textContent === 'Dostupný';
+
+  el.textContent =
+    available ? 'Nedostupný' : 'Dostupný';
+
+  document.querySelectorAll('.dot').forEach(d => {
+
+    d.style.background =
+      available ? '#dc2626' : '#16a34a';
+
+  });
+
+}
+
+
+function selectService(service){
+
+  document.getElementById('service').value =
+    service;
+
+  document
+    .getElementById('kontakt')
+    .scrollIntoView({
+      behavior:'smooth'
+    });
+
+}
+
+
+function aiChoose(type){
+
+  const content =
+    document.getElementById('aiContent');
+
+  let text='';
+  let buttons='';
+
+
+  if(type==='web'){
+
+    text =
+      'Webové stránky jsou moje služba. Chceš vytvořit nový web, nebo upravit existující?';
+
+    buttons =
+      '<button class="btn-primary" onclick="selectService(\'Webové stránky\');closeModal(\'ai\')">Chci web</button>';
+
+  }
+
+
+  else if(type==='grafika'){
+
+    text =
+      'Můžu pomoct s logem, plakátem nebo jinou grafikou. Co z toho potřebuješ?';
+
+    buttons =
+      '<button class="btn-primary" onclick="selectService(\'Loga a grafika\');closeModal(\'ai\')">Logo / grafika</button>' +
+      '<button class="btn-primary" onclick="selectService(\'Plakáty\');closeModal(\'ai\')">Plakát</button>';
+
+  }
+
+
+  else if(type==='prezentace'){
+
+    text =
+      'S prezentací ti můžu pomoct. Vyplň požadavek a napiš, na jaké téma ji potřebuješ.';
+
+    buttons =
+      '<button class="btn-primary" onclick="selectService(\'Prezentace\');closeModal(\'ai\')">Chci prezentaci</button>';
+
+  }
+
+
+  else{
+
+    text =
+      'V pohodě! Napiš svůj nápad do kontaktního formuláře a Ríša se ozve. Nemusíš mít všechno přesně vymyšlené.';
+
+    buttons =
+      '<button class="btn-primary" onclick="closeModal(\'ai\');document.querySelector(\'#kontakt\').scrollIntoView({behavior:\'smooth\'})">Napsat požadavek</button>';
+
+  }
+
+
+  content.innerHTML =
+    '<div class="ai-msg">' +
+    '<strong>Mucha AI:</strong> ' +
+    text +
+    '</div>' +
+    '<div class="ai-options">' +
+    buttons +
+    '</div>';
+
+}
+
+
+function sendForm(e){
+
+  e.preventDefault();
+
+  const name =
+    document.getElementById('name').value;
+
+  alert(
+    'Děkuji, ' +
+    name +
+    '! Požadavek je připraven. Pro skutečné odesílání je potřeba později připojit e-mail nebo formulářovou službu.'
+  );
+
+}
+
+
+// =====================================================
+// KONTAKT – SEM DOPLŇ SVŮJ VEŘEJNÝ TELEFON A E-MAIL
+// =====================================================
+
+const MY_PHONE =
+  "773758407";
+
+const MY_EMAIL =
+  "richardmucha275@gmail.com";
+
+
+document.getElementById("phoneDisplay").textContent =
+  MY_PHONE;
+
+document.getElementById("phoneLink").href =
+  "tel:" + MY_PHONE;
+
+document.getElementById("emailDisplay").textContent =
+  MY_EMAIL;
+
+document.getElementById("emailLink").href =
+  "mailto:" + MY_EMAIL;
+
+
+const saved =
+  localStorage.getItem('pmTheme');
+
+if(saved)
+  document.body.className=saved;
+
+</script>
+
+</body>
+</html>
